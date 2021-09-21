@@ -55,9 +55,7 @@ class lineEditDemo(QWidget):
 
         	else:
         		scrape_fb(group,email,password)
-#write your credentials below
-FB_email= "meshsalek5ales@outlook.com"#os.environ.get("email")
-FB_password= "meshsalek5ales@outlook.com6969"#os.environ.get("password")
+
 
 
 
