@@ -116,9 +116,9 @@ def FB_summer21(browser,group,FB_email="",FB_password=""):
 		# 	owner= post.find_element_by_xpath(".//span[@class='nc684nl6']/a/span")
 		browser.execute_script("arguments[0].scrollIntoView(true);", post);
 		try:
-			owner = post.find_element_by_xpath(".//h2[@class='gmql0nx0 l94mrbxd p1ri9a11 lzcic4wl aahdfvyu hzawbc8m']")
+			owner = post.find_element_by_xpath(".//h2[@class='gmql0nx0 l94mrbxd p1ri9a11 lzcic4wl aahdfvyu hzawbc8m']").text
 			# --- post date
-			date =post.find_element_by_xpath(".//span[@class='tojvnm2t a6sixzi8 abs2jz4q a8s20v7p t1p8iaqh k5wvi7nf q3lfd5jv pk4s997a bipmatt0 cebpdrjk qowsmv63 owwhemhu dp1hu0rb dhp61c6y iyyx5f41']/a/span")
+			date =post.find_element_by_xpath(".//span[@class='tojvnm2t a6sixzi8 abs2jz4q a8s20v7p t1p8iaqh k5wvi7nf q3lfd5jv pk4s997a bipmatt0 cebpdrjk qowsmv63 owwhemhu dp1hu0rb dhp61c6y iyyx5f41']/a/span").text
 		except:
 			owner=""
 			date=""
@@ -158,8 +158,8 @@ def FB_summer21(browser,group,FB_email="",FB_password=""):
 				Post_comments.append({"user":commentor.text,"comment":comment_body})
 		
 
-		post_json= {"post_owner":owner.text,
-		"date":f"{date.text}",
+		post_json= {"post_owner":owner,
+		"date":f"{date}",
 		"body":body,
 		"likes":likes,
 		"number of comments":no_comments_shares,
