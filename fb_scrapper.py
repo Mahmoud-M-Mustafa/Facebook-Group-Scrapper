@@ -120,7 +120,8 @@ def FB_summer21(browser,group,FB_email="",FB_password=""):
 			# --- post date
 			date =post.find_element_by_xpath(".//span[@class='tojvnm2t a6sixzi8 abs2jz4q a8s20v7p t1p8iaqh k5wvi7nf q3lfd5jv pk4s997a bipmatt0 cebpdrjk qowsmv63 owwhemhu dp1hu0rb dhp61c6y iyyx5f41']/a/span")
 		except:
-			owner,date=""
+			owner=""
+			date=""
 			print("error")
 
 
