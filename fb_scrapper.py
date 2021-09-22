@@ -16,7 +16,7 @@ from PyQt5.QtGui import QIntValidator,QDoubleValidator,QFont,QIcon
 from PyQt5.QtCore import Qt,pyqtSlot,QSize
 import sys
 
-class lineEditDemo(QWidget):
+class Qt(QWidget):
         def __init__(self,parent=None):
                 super().__init__(parent)
                 self.e1 = QLineEdit()
@@ -55,7 +55,9 @@ class lineEditDemo(QWidget):
 
         	else:
         		scrape_fb(group,email,password)
-
+#write your credentials below
+FB_email= "meshsalek5ales@outlook.com"#os.environ.get("email")
+FB_password= "meshsalek5ales@outlook.com6969"#os.environ.get("password")
 
 
 
@@ -79,6 +81,7 @@ def browser_init():
 
 def FB_summer21(browser,group,FB_email="",FB_password=""):
 	posts_array=[]
+
 	try:
 		
 		if FB_email != "" and FB_password != "":
@@ -112,24 +115,30 @@ def FB_summer21(browser,group,FB_email="",FB_password=""):
 		# except:
 		# 	owner= post.find_element_by_xpath(".//span[@class='nc684nl6']/a/span")
 		browser.execute_script("arguments[0].scrollIntoView(true);", post);
-		owner = post.find_element_by_xpath(".//h2[@class='gmql0nx0 l94mrbxd p1ri9a11 lzcic4wl aahdfvyu hzawbc8m']")
-		# --- post date
-		date =post.find_element_by_xpath(".//span[@class='tojvnm2t a6sixzi8 abs2jz4q a8s20v7p t1p8iaqh k5wvi7nf q3lfd5jv pk4s997a bipmatt0 cebpdrjk qowsmv63 owwhemhu dp1hu0rb dhp61c6y iyyx5f41']/a/span")
-
+		try:
+			owner = post.find_element_by_xpath(".//h2[@class='gmql0nx0 l94mrbxd p1ri9a11 lzcic4wl aahdfvyu hzawbc8m']")
+			# --- post date
+			date =post.find_element_by_xpath(".//span[@class='tojvnm2t a6sixzi8 abs2jz4q a8s20v7p t1p8iaqh k5wvi7nf q3lfd5jv pk4s997a bipmatt0 cebpdrjk qowsmv63 owwhemhu dp1hu0rb dhp61c6y iyyx5f41']/a/span")
+		except:
+			owner,date=""
+			print("error")
 
 
 		try:
-			body= post.find_element_by_xpath(".//div[@class='kvgmc6g5 cxmmr5t8 oygrvhab hcukyx3x c1et5uql ii04i59q']/div")
+			body= post.find_element_by_xpath(".//div[@class='kvgmc6g5 cxmmr5t8 oygrvhab hcukyx3x c1et5uql ii04i59q']/div").text
 		except:
+			body=""
 			print("Post has no text")
 		try:
-			likes= post.find_element_by_xpath(".//span[@class='pcp91wgn']")
+			likes= post.find_element_by_xpath(".//span[@class='pcp91wgn']").text
 		except:
+			likes="0"
 			print("post has no likes")
 
 		try:
-			no_comments_shares= post.find_element_by_xpath(".//div[@class='bp9cbjyn j83agx80 pfnyh3mw p1ueia1e']")
+			no_comments_shares= post.find_element_by_xpath(".//div[@class='bp9cbjyn j83agx80 pfnyh3mw p1ueia1e']").text
 		except:
+			no_comments_shares="0"
 			print("post has no comments or shares")
 
 		Post_comments=[]
@@ -150,9 +159,9 @@ def FB_summer21(browser,group,FB_email="",FB_password=""):
 
 		post_json= {"post_owner":owner.text,
 		"date":f"{date.text}",
-		"body":body.text,
-		"likes":likes.text,
-		"number of comments":no_comments_shares.text,
+		"body":body,
+		"likes":likes,
+		"number of comments":no_comments_shares,
 		"comments":Post_comments
 		}
 
@@ -189,6 +198,6 @@ def scrape_fb(group,FB_email,FB_password):
 
 if __name__ == "__main__":
 	app = QApplication(sys.argv)
-	win = lineEditDemo()
+	win = Qt()
 	win.show()
 	sys.exit(app.exec_())
