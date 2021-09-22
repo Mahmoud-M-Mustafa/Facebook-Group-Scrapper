@@ -4,13 +4,14 @@
 #
 import os,json,csv
 import io
-import time,datetime 
+import time
+from time import gmtime, strftime 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.remote.command import Command
-
+import urllib.request
 from PyQt5.QtWidgets import QApplication,QLineEdit,QWidget,QFormLayout,QPushButton,QLabel
 from PyQt5.QtGui import QIntValidator,QDoubleValidator,QFont,QIcon
 from PyQt5.QtCore import Qt,pyqtSlot,QSize
@@ -55,9 +56,7 @@ class Qt(QWidget):
 
         	else:
         		scrape_fb(group,email,password)
-#write your credentials below
-FB_email= "meshsalek5ales@outlook.com"#os.environ.get("email")
-FB_password= "meshsalek5ales@outlook.com6969"#os.environ.get("password")
+
 
 
 
@@ -81,6 +80,16 @@ def browser_init():
 
 def FB_summer21(browser,group,FB_email="",FB_password=""):
 	posts_array=[]
+
+	try:
+
+		cwd=os.getcwd()
+		current_time=strftime("%a,%d-%b-%Y,%H-%M-%S ", gmtime())
+		img_dir=f"Images[{current_time}]"
+		path = os.path.join(cwd, img_dir)
+		os.mkdir(path,0o666)
+	except:
+		print("OS error")
 
 	try:
 		
@@ -122,7 +131,7 @@ def FB_summer21(browser,group,FB_email="",FB_password=""):
 		except:
 			owner=""
 			date=""
-			print("error")
+			print("retrieve error")
 
 
 		try:
@@ -156,6 +165,7 @@ def FB_summer21(browser,group,FB_email="",FB_password=""):
 			except:
 				comment_body= "Comment is an image or GIF"
 				Post_comments.append({"user":commentor.text,"comment":comment_body})
+
 		
 
 		post_json= {"post_owner":owner,
@@ -172,6 +182,12 @@ def FB_summer21(browser,group,FB_email="",FB_password=""):
 			# if os.stat('post.txt').st_size ==0 :
 			json.dump(posts_array, json_file,indent=4,ensure_ascii = False)
 
+
+		try:
+			img = post.find_element_by_xpath(".//div[@class='pmk7jnqg kr520xx4']/img").get_attribute("src")
+			urllib.request.urlretrieve(img,f"{img_dir}/Post{counter}.jpg")
+		except:
+			print("post may not have an image")
 		print("#################")
 		counter +=1
 
